@@ -1,4 +1,5 @@
 from collections import deque
+from typing import List
 """
 Graph example:
     graph = {}
@@ -20,13 +21,14 @@ def person_is_seller(person: str):
         return True
     return False
 
-def bfs_search(graph: dict, search_deque: deque):
+def bfs_search(graph: dict, search_deque: deque, searched: List):
     while search_deque:
         person = search_deque.popleft()
-        if person_is_seller(person):
-            print(f"> We found it!\n> {person} is seller!")
-            return 0
-        else:
-            search_deque += graph[person]
+        if not person in searched:
+            if person_is_seller(person):
+                print(f"> We found it!\n> {person} is seller!")
+                return True
+            else:
+                search_deque += graph[person]
     print("> We didn't find it")
-    return -1
+    return False
